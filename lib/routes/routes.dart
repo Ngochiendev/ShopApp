@@ -14,7 +14,7 @@ class AppPage {
     ),
     GetPage(
       name: PageRoutes.loginScreen,
-      page: () => const LoginScreen(),
+      page: () => LoginScreen(),
     ),
     GetPage(
       name: PageRoutes.signupScreen,

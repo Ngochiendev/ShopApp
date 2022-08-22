@@ -8,6 +8,7 @@ class TextUltils extends StatelessWidget {
   final Color? color;
   final TextOverflow? textOverflow;
   final FontWeight? fontWeight;
+  final TextDecoration? decoration;
 
   const TextUltils({
     Key? key,
@@ -16,20 +17,20 @@ class TextUltils extends StatelessWidget {
     this.color,
     this.textOverflow,
     this.fontWeight,
+    this.decoration,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        text,
-        style: GoogleFonts.lato(
-          textStyle: TextStyle(
-            color: color,
-            fontSize: fontsize,
-            overflow: textOverflow,
-            fontWeight: fontWeight,
-          ),
+    return Text(
+      text,
+      style: GoogleFonts.poppins(
+        textStyle: TextStyle(
+          color: color,
+          fontSize: fontsize,
+          overflow: textOverflow,
+          fontWeight: fontWeight,
+          decoration: decoration,
         ),
       ),
     );

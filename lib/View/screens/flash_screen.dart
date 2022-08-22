@@ -20,7 +20,7 @@ class _FlashScreenState extends State<FlashScreen> {
       const Duration(seconds: 6),
       () {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-          return const LoginScreen();
+          return LoginScreen();
         }));
       },
     );
@@ -38,14 +38,14 @@ class _FlashScreenState extends State<FlashScreen> {
                 TextUltils(
                   text: 'Welcome',
                   color: mainColor,
-                  fontsize: 40,
+                  fontsize: 50,
                   fontWeight: FontWeight.bold,
                   textOverflow: TextOverflow.ellipsis,
                 ),
                 TextUltils(
                   text: 'Stilven Shop',
                   color: mainColor,
-                  fontsize: 40,
+                  fontsize: 50,
                   fontWeight: FontWeight.bold,
                   textOverflow: TextOverflow.ellipsis,
                 ),
@@ -58,7 +58,6 @@ class _FlashScreenState extends State<FlashScreen> {
               fit: BoxFit.cover,
             ),
           ),
-          // const SizedBox(height: 230),
           Container(
             child: const CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation(Colors.green),
