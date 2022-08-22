@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shopapp/View/screens/main_screen.dart';
 import 'package:shopapp/View/widgets/text_ultils.dart';
 import 'package:shopapp/ultils/theme.dart';
+import 'auth/login_screen.dart';
 
 class FlashScreen extends StatefulWidget {
   const FlashScreen({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class _FlashScreenState extends State<FlashScreen> {
       const Duration(seconds: 6),
       () {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-          return const login();
+          return const LoginScreen();
         }));
       },
     );
@@ -54,7 +54,7 @@ class _FlashScreenState extends State<FlashScreen> {
           ),
           Container(
             child: Lottie.asset(
-              './assets/images/flashscreen.json',
+              './assets/image_json/flashscreen.json',
               fit: BoxFit.cover,
             ),
           ),

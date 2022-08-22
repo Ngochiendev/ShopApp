@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-import 'package:shopapp/View/screens/main_screen.dart';
+import '../View/screens/auth/login_screen.dart';
+import '../View/screens/auth/signup_screen.dart';
 import '../View/screens/flash_screen.dart';
 
 class AppPage {
@@ -12,14 +13,19 @@ class AppPage {
       page: () => const FlashScreen(),
     ),
     GetPage(
-      name: PageRoutes.login,
-      page: () => const login(),
+      name: PageRoutes.loginScreen,
+      page: () => const LoginScreen(),
     ),
+    GetPage(
+      name: PageRoutes.signupScreen,
+      page: () => const SignUpScreen(),
+    )
   ];
 }
 
 //initialRoute
 class PageRoutes {
   static String flashScreen = '/flashScreen';
-  static String login = '/login';
+  static String loginScreen = '/loginScreen';
+  static String signupScreen = '/signupScreen';
 }

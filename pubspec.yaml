@@ -70,7 +70,8 @@ flutter:
   assets:
     - assets/
     - assets/images/
-    - assets/images/background/
+    - assets/image_json/
+   
 
   #   - images/a_dot_ham.jpeg
 
