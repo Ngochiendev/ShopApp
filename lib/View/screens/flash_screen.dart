@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shopapp/View/widgets/text_ultils.dart';
 import 'package:shopapp/ultils/theme.dart';
-import 'auth/login_screen.dart';
+import 'package:get/get.dart';
 
 class FlashScreen extends StatefulWidget {
   const FlashScreen({Key? key}) : super(key: key);
@@ -19,9 +19,10 @@ class _FlashScreenState extends State<FlashScreen> {
     Future.delayed(
       const Duration(seconds: 6),
       () {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-          return LoginScreen();
-        }));
+        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+        //   return LoginScreen();
+        // }));
+        Get.offAllNamed("/loginScreen");
       },
     );
   }

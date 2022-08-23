@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:shopapp/View/widgets/auth/auth_text_form_field.dart';
 import 'package:shopapp/View/widgets/text_ultils.dart';
 
@@ -35,8 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 margin: const EdgeInsets.only(top: 30),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 35.0),
-                  child: Image.asset(
-                    './assets/images/Secure login-bro.png',
+                  child: SvgPicture.asset(
+                    './assets/icons/login.svg',
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -44,30 +45,22 @@ class _LoginScreenState extends State<LoginScreen> {
               Expanded(
                 flex: 5,
                 child: Container(
-                  // color: Colors.blue,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 35.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: const [
-                              TextUltils(
-                                text: 'Welcome!',
-                                fontsize: 35,
-                                fontWeight: FontWeight.w700,
-                              ),
-                              TextUltils(
-                                text: 'Signin to continue',
-                                fontsize: 24,
-                                fontWeight: FontWeight.w500,
-                                color: Color.fromARGB(255, 109, 180, 238),
-                              ),
-                            ],
-                          ),
+                        const TextUltils(
+                          text: 'Welcome!',
+                          fontsize: 35,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        const TextUltils(
+                          text: 'Signin to continue',
+                          fontsize: 24,
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromARGB(255, 109, 180, 238),
                         ),
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 20),
@@ -83,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 hintText: 'Username',
                                 labelText: 'Username',
                               ),
-                              const SizedBox(height: 25),
+                              const SizedBox(height: 20),
                               //pasword
                               AuthTextFormField(
                                 controller: widget.password_controller,
@@ -164,13 +157,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   SocialCard(
-                                    icon: './assets/icons/facebook-2.svg',
+                                    icon: './assets/icons/facebook_icon.svg',
                                     onpress: () {
                                       print('facebook');
                                     },
                                   ),
                                   SocialCard(
-                                    icon: './assets/icons/google-icon.svg',
+                                    icon: './assets/icons/google_icon.svg',
                                     onpress: () {
                                       print('google');
                                     },
@@ -202,19 +195,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         text: 'Don\'t have an Account?',
                         color: Colors.white,
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                            onPressed: () {
-                              print('SignUp');
-                            },
-                            child: const TextUltils(
-                              text: 'Sign Up',
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              decoration: TextDecoration.underline,
-                            )),
-                      ),
+                      TextButton(
+                          style: TextButton.styleFrom(
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 5,
+                            ),
+                          ),
+                          onPressed: () {
+                            Get.toNamed("/signupScreen");
+                            print('SignUp');
+                          },
+                          child: const TextUltils(
+                            text: 'Sign Up',
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                          )),
                     ],
                   ),
                 ),
