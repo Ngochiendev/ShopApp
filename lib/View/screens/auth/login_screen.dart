@@ -95,10 +95,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 alignment: Alignment.centerRight,
                                 child: TextButton(
                                     onPressed: () {
-                                      print('forget password');
+                                      Get.toNamed("forgotScreen");
+                                      print('forgot password');
                                     },
                                     child: const TextUltils(
-                                      text: 'Forget Password?',
+                                      text: 'Forgot Password?',
                                       color: Colors.black54,
                                       fontsize: 15,
                                       fontWeight: FontWeight.w500,
