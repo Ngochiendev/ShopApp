@@ -17,6 +17,7 @@ class AppPage {
     GetPage(
       name: PageRoutes.loginScreen,
       page: () => LoginScreen(),
+      binding: AuthBinding(),
     ),
     GetPage(
       name: PageRoutes.signupScreen,
@@ -26,6 +27,7 @@ class AppPage {
     GetPage(
       name: PageRoutes.forgetScreen,
       page: () => ForgotScreen(),
+      binding: AuthBinding(),
     ),
   ];
 }
