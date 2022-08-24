@@ -31,15 +31,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
           width: size.width,
           child: Stack(
             children: [
-              Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+              Positioned(
+                top: 40,
+                left: 20,
                 height: 30,
                 width: 30,
                 child: GestureDetector(
                   onTap: () {
                     Get.offNamed("/loginScreen");
-                    print('loginScreen');
                   },
                   child: const Icon(Icons.arrow_back_ios),
                 ),
@@ -81,7 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             const SizedBox(height: 20),
 
-                            //email
+                            //username
                             AuthTextFormField(
                               controller: widget.username_controller,
                               validator: (valueUsername) {
@@ -157,7 +156,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
 
                             //Text Term & Coditions
-                             check_widget(),
+                            check_widget(),
                             const SizedBox(height: 20),
                             //Button sign up
                             SizedBox(
