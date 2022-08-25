@@ -22,7 +22,7 @@ class _FlashScreenState extends State<FlashScreen> {
         // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
         //   return LoginScreen();
         // }));
-        Get.offAllNamed("/loginScreen");
+        Get.offAllNamed("/signin_signupScreen");
       },
     );
   }

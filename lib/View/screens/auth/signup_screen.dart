@@ -41,7 +41,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 width: 30,
                 child: GestureDetector(
                   onTap: () {
-                    Get.offNamed("/loginScreen");
+                    print('back signin & signup screen');
+                    Get.toNamed('/signin_signupScreen');
                   },
                   child: const Icon(Icons.arrow_back_ios),
                 ),
@@ -50,14 +51,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   //imgae
+
                   Container(
-                    height: size.height * 0.34,
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    margin: const EdgeInsets.only(top: 15),
+                    height: size.height * 0.30,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    margin: const EdgeInsets.only(top: 30),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: SvgPicture.asset('./assets/icons/signup.svg',
-                          fit: BoxFit.cover),
+                      child: SvgPicture.asset(
+                        './assets/icons/signup.svg',
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   //text

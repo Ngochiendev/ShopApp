@@ -9,6 +9,7 @@ class TextUltils extends StatelessWidget {
   final TextOverflow? textOverflow;
   final FontWeight? fontWeight;
   final TextDecoration? decoration;
+  final TextAlign? textAlign;
 
   const TextUltils({
     Key? key,
@@ -18,11 +19,13 @@ class TextUltils extends StatelessWidget {
     this.textOverflow,
     this.fontWeight,
     this.decoration,
+    this.textAlign,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
+      textAlign: textAlign,
       text,
       style: GoogleFonts.poppins(
         textStyle: TextStyle(

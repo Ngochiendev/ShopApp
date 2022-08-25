@@ -41,8 +41,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 30,
                 child: GestureDetector(
                   onTap: () {
-                    print('None');
-                    // Get.offNamed("/loginScreen");
+                    print('back signin & signup screen');
+
+                    Get.toNamed("/signin_signupScreen");
                   },
                   child: const Icon(Icons.arrow_back_ios),
                 ),
@@ -180,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   Container(
                                     margin: const EdgeInsets.symmetric(
-                                        vertical: 20),
+                                        vertical: 15),
                                     child: Row(
                                       children: const [
                                         Flexible(
