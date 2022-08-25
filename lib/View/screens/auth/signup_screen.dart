@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:shopapp/View/screens/auth/component/auth_button.dart';
 import 'package:shopapp/View/widgets/text_ultils.dart';
 import 'package:shopapp/logic/controller/auth_controller.dart';
 import 'package:shopapp/ultils/ultilService.dart';
@@ -8,18 +9,19 @@ import '../../widgets/auth/auth_text_form_field.dart';
 import 'component/check_widget.dart';
 
 class SignUpScreen extends StatefulWidget {
-  SignUpScreen({Key? key}) : super(key: key);
-  final TextEditingController username_controller = TextEditingController();
-  final TextEditingController password_controller = TextEditingController();
-  final TextEditingController email_controller = TextEditingController();
-  final formKey = GlobalKey<FormState>();
-  final controller = Get.find<Authcontroller>();
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final TextEditingController username_controller = TextEditingController();
+  final TextEditingController password_controller = TextEditingController();
+  final TextEditingController email_controller = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  final controller = Get.find<Authcontroller>();
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -63,7 +65,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 35.0),
                       child: Form(
-                        key: widget.formKey,
+                        key: formKey,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
@@ -82,7 +84,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                             //username
                             AuthTextFormField(
-                              controller: widget.username_controller,
+                              controller: username_controller,
                               validator: (valueUsername) {
                                 if (valueUsername.toString().length <= 2 ||
                                     !RegExp(validationName)
@@ -97,38 +99,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               hintText: 'Username',
                               labelText: 'Username',
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 15),
                             //Email
                             AuthTextFormField(
-                              controller: widget.email_controller,
+                              controller: email_controller,
                               validator: (email) {
-                                // if (!RegExp(validationEmail).hasMatch(email)) {
-                                //   return "Valid email";
-                                // } else {
-                                //   return null;
-                                // }
-                                if (email == null || email.isEmtry) {
-                                  return "Enter your email";
+                                if (!RegExp(validationEmail).hasMatch(email)) {
+                                  return "Valid email";
+                                } else {
+                                  return null;
                                 }
-                                if (!email.isEmail) {
-                                  return 'Enter a valid email';
-                                }
-                                return null;
                               },
                               prefixIcon:
                                   Image.asset('./assets/images/email.png'),
                               hintText: 'Email',
                               labelText: 'Email',
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 15),
                             //pasword
                             GetBuilder<Authcontroller>(
                               builder: (_) {
                                 return AuthTextFormField(
-                                  controller: widget.password_controller,
-                                  obscureText: widget.controller.isVisibilty
-                                      ? false
-                                      : true,
+                                  controller: password_controller,
+                                  obscureText:
+                                      controller.isVisibilty ? false : true,
                                   validator: (password) {
                                     if (password == null || password.isEmpty) {
                                       return 'Please enter your password';
@@ -144,10 +138,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   labelText: 'Password',
                                   suffixIcon: GestureDetector(
                                     onTap: () {
-                                      widget.controller.Visibilty();
+                                      controller.Visibilty();
                                       print('show');
                                     },
-                                    child: widget.controller.isVisibilty
+                                    child: controller.isVisibilty
                                         ? const Icon(Icons.visibility_off)
                                         : const Icon(Icons.visibility),
                                   ),
@@ -157,24 +151,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                             //Text Term & Coditions
                             check_widget(),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 15),
                             //Button sign up
-                            SizedBox(
-                              height: 45,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: const Color.fromARGB(
-                                        255, 107, 220, 111),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15))),
-                                onPressed: () {},
-                                child: const TextUltils(
+                            GetBuilder<Authcontroller>(
+                              builder: (_) {
+                                return AuthButton(
                                   text: 'SIGN UP',
-                                  fontsize: 20,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
+                                  onpress: () {
+                                    if (controller.isCheckbox == false) {
+                                      Get.snackbar(
+                                        'Check Box',
+                                        'Please, Accept term & conditions and Privacy Policy',
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: Colors.green,
+                                        colorText: Colors.white,
+                                      );
+                                    } else if (formKey.currentState!
+                                        .validate()) {
+                                      String name =
+                                          username_controller.text.trim();
+                                      String email =
+                                          email_controller.text.trim();
+                                      String password =
+                                          password_controller.text;
+                                      controller.signUpUsingFirebase(
+                                        name: name,
+                                        email: email,
+                                        password: password,
+                                      );
+                                      controller.isCheckbox = true;
+                                    }
+                                  },
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -207,6 +216,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             onPressed: () {
                               Get.offNamed("/loginScreen");
+                              print('Loginpage');
                             },
                             child: const TextUltils(
                               text: 'Login',
