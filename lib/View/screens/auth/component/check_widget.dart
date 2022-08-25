@@ -20,6 +20,7 @@ class check_widget extends StatelessWidget {
             InkWell(
               borderRadius: BorderRadius.circular(10),
               onTap: () {
+                print('check');
                 controller.Checkbox();
               },
               child: Container(
@@ -35,54 +36,56 @@ class check_widget extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 5),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                children: [
-                  const TextSpan(
-                    text: " I accept ",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
+            Expanded(
+              child: RichText(
+                textAlign: TextAlign.start,
+                text: TextSpan(
+                  children: [
+                    const TextSpan(
+                      text: "I accept ",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
                     ),
-                  ),
-                  TextSpan(
-                    text: 'Term & Coditions',
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () async {
-                        String url = "http://bit.ly/kilimo-term-condition";
-                        if (await canLaunch(url)) {
-                          await launch(url, forceSafariVC: true);
-                        } else {
-                          throw 'Could not launch $url';
-                        }
-                      },
-                    style: const TextStyle(
-                      color: Colors.blue,
-                      fontSize: 15,
+                    TextSpan(
+                      text: 'Term & Coditions',
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () async {
+                          String url = "http://bit.ly/kilimo-term-condition";
+                          if (await canLaunch(url)) {
+                            await launch(url, forceSafariVC: true);
+                          } else {
+                            throw 'Could not launch $url';
+                          }
+                        },
+                      style: const TextStyle(
+                        color: Colors.blue,
+                        fontSize: 15,
+                      ),
                     ),
-                  ),
-                  const TextSpan(
-                    text: " and ",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
+                    const TextSpan(
+                      text: " and ",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
                     ),
-                  ),
-                  TextSpan(
-                    text: 'Privacy Policy',
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () async {
-                        String url = "http://bit.ly/kilimo-private-policy";
-                        if (await canLaunch(url)) {
-                          await launch(url, forceSafariVC: true);
-                        } else {
-                          throw 'Could not launch $url';
-                        }
-                      },
-                    style: const TextStyle(color: Colors.blue, fontSize: 15),
-                  ),
-                ],
+                    TextSpan(
+                      text: 'Privacy Policy',
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () async {
+                          String url = "http://bit.ly/kilimo-private-policy";
+                          if (await canLaunch(url)) {
+                            await launch(url, forceSafariVC: true);
+                          } else {
+                            throw 'Could not launch $url';
+                          }
+                        },
+                      style: const TextStyle(color: Colors.blue, fontSize: 15),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

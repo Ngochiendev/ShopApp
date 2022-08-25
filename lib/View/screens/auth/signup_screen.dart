@@ -32,6 +32,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           height: size.height,
           width: size.width,
           child: Stack(
+            alignment: Alignment.bottomCenter,
             children: [
               Positioned(
                 top: 40,
@@ -80,7 +81,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               fontWeight: FontWeight.w500,
                               color: Color.fromARGB(255, 109, 180, 238),
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 15),
 
                             //username
                             AuthTextFormField(
@@ -151,7 +152,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                             //Text Term & Coditions
                             check_widget(),
-                            const SizedBox(height: 15),
                             //Button sign up
                             GetBuilder<Authcontroller>(
                               builder: (_) {
@@ -190,47 +190,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                   ),
-                  //Bottom
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 32, vertical: 30),
-                      decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(30)),
-                        color: Color.fromARGB(255, 107, 220, 111),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const TextUltils(
-                            text: 'Already have an Account?',
-                          ),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              alignment: Alignment.centerLeft,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 5,
-                              ),
-                            ),
-                            onPressed: () {
-                              Get.offNamed("/loginScreen");
-                              print('Loginpage');
-                            },
-                            child: const TextUltils(
-                              text: 'Login',
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
                 ],
               ),
+              //Bottom
+              SizedBox(
+                height: 60,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const TextUltils(
+                      text: 'Already have an Account?',
+                      fontsize: 15,
+                    ),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                        ),
+                      ),
+                      onPressed: () {
+                        Get.offNamed("/loginScreen");
+                        print('Loginpage');
+                      },
+                      child: const TextUltils(
+                        text: 'Login',
+                        fontsize: 15,
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

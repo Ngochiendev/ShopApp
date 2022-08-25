@@ -9,7 +9,7 @@ class Authcontroller extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   Future<void> Visibilty() async {
-    isCheckbox = !isCheckbox;
+    isVisibilty = !isVisibilty;
     update();
   }
 
