@@ -4,23 +4,27 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:shopapp/View/widgets/auth/auth_text_form_field.dart';
 import 'package:shopapp/View/widgets/text_ultils.dart';
+import 'package:shopapp/logic/controller/auth_controller.dart';
+import 'package:shopapp/ultils/ultilService.dart';
 
+import 'component/auth_button.dart';
 import 'component/social_login.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
-  final TextEditingController username_controller = TextEditingController();
-  final TextEditingController password_controller = TextEditingController();
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController email_controller = TextEditingController();
+  final TextEditingController password_controller = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  final controller = Get.find<Authcontroller>();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -62,116 +66,147 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontWeight: FontWeight.w500,
                           color: Color.fromARGB(255, 109, 180, 238),
                         ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(vertical: 20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              //email
-                              AuthTextFormField(
-                                controller: widget.username_controller,
-                                validator: () {},
-                                prefixIcon:
-                                    Image.asset('./assets/images/user.png'),
-                                hintText: 'Username',
-                                labelText: 'Username',
-                              ),
-                              const SizedBox(height: 20),
-                              //pasword
-                              AuthTextFormField(
-                                controller: widget.password_controller,
-                                obscureText: true,
-                                validator: () {},
-                                prefixIcon:
-                                    Image.asset('./assets/images/lock.png'),
-                                hintText: 'Password',
-                                labelText: 'Password',
-                                suffixIcon: const Icon(Icons.visibility),
-                              ),
-                              const SizedBox(height: 5),
+                        Form(
+                          key: formKey,
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                //Email
+                                AuthTextFormField(
+                                  controller: email_controller,
+                                  obscureText: false,
+                                  validator: (valueEmail) {
+                                    if (!RegExp(validationEmail)
+                                        .hasMatch(valueEmail)) {
+                                      return "Enter valid mail";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  prefixIcon:
+                                      Image.asset('./assets/images/email.png'),
+                                  hintText: 'Email',
+                                  labelText: 'Email',
+                                ),
+                                const SizedBox(height: 15),
+                                //pasword
+                                GetBuilder<Authcontroller>(
+                                  builder: (_) {
+                                    return AuthTextFormField(
+                                      controller: password_controller,
+                                      obscureText:
+                                          controller.isVisibilty ? false : true,
+                                      validator: (password) {
+                                        if (password == null ||
+                                            password.isEmpty) {
+                                          return 'Please enter your password';
+                                        }
+                                        if (password.length < 7) {
+                                          return 'password isn\'t 7 characters';
+                                        }
+                                        return null;
+                                      },
+                                      prefixIcon: Image.asset(
+                                          './assets/images/lock.png'),
+                                      hintText: 'Password',
+                                      labelText: 'Password',
+                                      suffixIcon: GestureDetector(
+                                        onTap: () {
+                                          controller.Visibilty();
+                                          print('show');
+                                        },
+                                        child: controller.isVisibilty
+                                            ? const Icon(Icons.visibility_off)
+                                            : const Icon(Icons.visibility),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(height: 5),
 
-                              //Button forget
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: TextButton(
-                                    onPressed: () {
-                                      Get.toNamed("forgotScreen");
-                                      print('forgot password');
-                                    },
-                                    child: const TextUltils(
-                                      text: 'Forgot Password?',
-                                      color: Colors.black54,
-                                      fontsize: 15,
-                                      fontWeight: FontWeight.w500,
-                                    )),
-                              ),
-                              const SizedBox(height: 5),
-                              //Button login
-                              SizedBox(
-                                height: 50,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary: const Color.fromARGB(
-                                        255, 107, 220, 111),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                  ),
-                                  onPressed: () {},
-                                  child: const TextUltils(
-                                    text: 'Login',
-                                    fontsize: 20,
-                                    fontWeight: FontWeight.w500,
+                                //Button forget
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: TextButton(
+                                      onPressed: () {
+                                        Get.toNamed("forgotScreen");
+                                        print('forgot password');
+                                      },
+                                      child: const TextUltils(
+                                        text: 'Forgot Password?',
+                                        color: Colors.black54,
+                                        fontsize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      )),
+                                ),
+                                const SizedBox(height: 5),
+                                //Button login
+                                GetBuilder<Authcontroller>(
+                                  builder: (_) {
+                                    return AuthButton(
+                                      text: 'LOGIN',
+                                      onpress: () async {
+                                        if (formKey.currentState!.validate()) {
+                                          String email =
+                                              email_controller.text.trim();
+                                          String password =
+                                              password_controller.text;
+                                          controller.logInUsingFirebase(
+                                              email: email, password: password);
+                                        }
+                                      },
+                                    );
+                                  },
+                                ),
+                                Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 20),
+                                  child: Row(
+                                    children: const [
+                                      Flexible(
+                                        child: Divider(
+                                          height: 1,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 8),
+                                        child: Text(
+                                          'Or Sign In with',
+                                          style: TextStyle(fontSize: 14),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: Divider(
+                                          height: 1,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ),
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 25),
-                                child: Row(
-                                  children: const [
-                                    Flexible(
-                                      child: Divider(
-                                        height: 1,
-                                        color: Colors.black,
-                                      ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SocialCard(
+                                      icon: './assets/icons/facebook_icon.svg',
+                                      onpress: () {
+                                        print('facebook');
+                                      },
                                     ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 8),
-                                      child: Text(
-                                        'Or Sign In with',
-                                        style: TextStyle(fontSize: 14),
-                                      ),
-                                    ),
-                                    Flexible(
-                                      child: Divider(
-                                        height: 1,
-                                        color: Colors.black,
-                                      ),
+                                    SocialCard(
+                                      icon: './assets/icons/google_icon.svg',
+                                      onpress: () {
+                                        print('google');
+                                      },
                                     ),
                                   ],
                                 ),
-                              ),
-
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SocialCard(
-                                    icon: './assets/icons/facebook_icon.svg',
-                                    onpress: () {
-                                      print('facebook');
-                                    },
-                                  ),
-                                  SocialCard(
-                                    icon: './assets/icons/google_icon.svg',
-                                    onpress: () {
-                                      print('google');
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
