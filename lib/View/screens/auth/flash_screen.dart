@@ -19,9 +19,6 @@ class _FlashScreenState extends State<FlashScreen> {
     Future.delayed(
       const Duration(seconds: 6),
       () {
-        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-        //   return LoginScreen();
-        // }));
         Get.offAllNamed("/signin_signupScreen");
       },
     );

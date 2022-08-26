@@ -132,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         suffixIcon: GestureDetector(
                                           onTap: () {
                                             controller.Visibilty();
-                                            print('show');
+                                            print('show password');
                                           },
                                           child: controller.isVisibilty
                                               ? const Icon(Icons.visibility_off)
@@ -217,10 +217,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                           print('facebook');
                                         },
                                       ),
-                                      SocialCard(
-                                        icon: './assets/icons/google_icon.svg',
-                                        onpress: () {
-                                          print('google');
+                                      //login google
+                                      GetBuilder<Authcontroller>(
+                                        builder: (_) {
+                                          return SocialCard(
+                                            icon:
+                                                './assets/icons/google_icon.svg',
+                                            onpress: () {
+                                              controller.googleSignApp();
+                                              print('google');
+                                            },
+                                          );
                                         },
                                       ),
                                     ],

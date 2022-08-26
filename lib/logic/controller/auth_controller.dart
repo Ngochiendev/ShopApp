@@ -2,11 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Authcontroller extends GetxController {
   bool isVisibilty = false;
   bool isCheckbox = false;
   var displayUserName = '';
+  var displayUserPhoto = '';
   FirebaseAuth auth = FirebaseAuth.instance;
 
   Future<void> Visibilty() async {
@@ -113,7 +115,43 @@ class Authcontroller extends GetxController {
     }
   }
 
-  Future<void> googleSignUpApp() async {}
+  Future<void> googleSignApp() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      displayUserName = googleUser!.displayName!;
+      displayUserPhoto = googleUser.photoUrl!;
+      update();
+      Get.offNamed('/mainScreen');
+    } catch (error) {
+      Get.snackbar(
+        'Error!',
+        error.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    }
+    // try {
+    //   final GoogleSignInAccount? googleSignInAccount =
+    //       await GoogleSignIn().signIn();
+    //   if (googleSignInAccount != null) {
+    //     final GoogleSignInAuthentication googleSignInAuthentication =
+    //         await googleSignInAccount.authentication;
+    //     final AuthCredential authCredential = GoogleAuthProvider.credential(
+    //         accessToken: googleSignInAuthentication.accessToken,
+    //         idToken: googleSignInAuthentication.idToken);
+    //     await auth.signInWithCredential(authCredential);
+    //   }
+    //   displayUserName = googleSignInAccount!.displayName!;
+    //   displayUserPhoto = googleSignInAccount.photoUrl!;
+    //   update();
+    //   Get.offNamed('/mainScreen');
+    // } on FirebaseAuthException catch (e) {
+    //   print(e.message);
+    //   rethrow;
+    // }
+  }
+
   Future<void> facebookSignUpApp() async {}
   //reset password
   Future<void> resetPassword(String email) async {
