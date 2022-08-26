@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shopapp/Models/facebook_models.dart';
 
 class Authcontroller extends GetxController {
   bool isVisibilty = false;
@@ -10,6 +12,7 @@ class Authcontroller extends GetxController {
   var displayUserName = '';
   var displayUserPhoto = '';
   FirebaseAuth auth = FirebaseAuth.instance;
+  FacebookModels? facebookmodel;
 
   Future<void> Visibilty() async {
     isVisibilty = !isVisibilty;
@@ -115,7 +118,7 @@ class Authcontroller extends GetxController {
     }
   }
 
-  Future<void> googleSignApp() async {
+  Future<void> googleSignInApp() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       displayUserName = googleUser!.displayName!;
@@ -152,7 +155,28 @@ class Authcontroller extends GetxController {
     // }
   }
 
-  Future<void> facebookSignUpApp() async {}
+  Future<void> facebookSignInApp() async {
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+    try {
+      final OAuthCredential facebookAuthCredential =
+          FacebookAuthProvider.credential(loginResult.accessToken!.token);
+      await auth.signInWithCredential(facebookAuthCredential);
+      if (loginResult.status == LoginStatus.success) {
+        final data = await FacebookAuth.instance.getUserData();
+        facebookmodel = FacebookModels.fromJson(data);
+        Get.offNamed('mainScreen');
+      }
+    } on FirebaseAuthException catch (error) {
+      Get.snackbar(
+        'Error!',
+        error.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    }
+  }
+
   //reset password
   Future<void> resetPassword(String email) async {
     try {
