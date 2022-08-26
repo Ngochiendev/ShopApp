@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class Authcontroller extends GetxController {
@@ -114,8 +115,52 @@ class Authcontroller extends GetxController {
 
   Future<void> googleSignUpApp() async {}
   Future<void> facebookSignUpApp() async {}
+  //reset password
+  Future<void> resetPassword(String email) async {
+    try {
+      await auth.sendPasswordResetEmail(email: email);
+      update();
+      Fluttertoast.showToast(
+          msg: "Please, Check your email for a reset password email",
+          textColor: Colors.white,
+          toastLength: Toast.LENGTH_LONG,
+          timeInSecForIosWeb: 2,
+          gravity: ToastGravity.SNACKBAR,
+          backgroundColor: Colors.green,
+          fontSize: 16.0);
+      Future.delayed(
+        const Duration(seconds: 4),
+        () {
+          Get.back();
+        },
+      );
+    } on FirebaseAuthException catch (error) {
+      String message = '';
+      String title = error.code.replaceAll(RegExp('_'), '').capitalize!;
+      if (error.code == 'user-not-found') {
+        message =
+            'Account doesn\t exists for that $email.. Create your account by signing up...!';
+      } else {
+        error.message.toString();
+      }
+      Get.snackbar(
+        title,
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } catch (error) {
+      Get.snackbar(
+        'Error!',
+        error.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    }
+  }
 
-  Future<void> resetPassword() async {}
   Future<void> signOutFromApp() async {}
 }
 
