@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:shopapp/View/widgets/auth/auth_text_form_field.dart';
 import 'package:shopapp/View/widgets/text_ultils.dart';
 import 'package:shopapp/logic/controller/auth_controller.dart';
+import 'package:shopapp/ultils/ultilService.dart';
 
 class ForgotScreen extends StatefulWidget {
-  ForgotScreen({Key? key}) : super(key: key);
-  final TextEditingController emailcontroller = TextEditingController();
-  final formKey = GlobalKey<FormState>();
-  final controller = Get.find<Authcontroller>();
+  const ForgotScreen({Key? key}) : super(key: key);
 
   @override
   State<ForgotScreen> createState() => _ForgotScreenState();
 }
 
 class _ForgotScreenState extends State<ForgotScreen> {
+  final TextEditingController emailcontroller = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  final controller = Get.find<Authcontroller>();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Form(
-        key: widget.formKey,
+        key: formKey,
         child: SingleChildScrollView(
           child: SizedBox(
             height: size.height,
@@ -76,45 +78,49 @@ class _ForgotScreenState extends State<ForgotScreen> {
                           const SizedBox(height: 40),
                           //Email
                           AuthTextFormField(
-                            controller: widget.emailcontroller,
+                            controller: emailcontroller,
                             validator: (email) {
-                              // if (!RegExp(validationEmail).hasMatch(email)) {
-                              //   return "Valid email";
-                              // } else {
-                              //   return null;
-                              // }
-                              if (email == null || email.isEmtry) {
-                                return "Enter your email";
+                              if (!RegExp(validationEmail).hasMatch(email)) {
+                                return "Valid email";
+                              } else {
+                                return null;
                               }
-                              if (!email.isEmail) {
-                                return 'Enter a valid email';
-                              }
-                              return null;
                             },
                             prefixIcon:
                                 Image.asset('./assets/images/email.png'),
                             hintText: 'Email',
                             labelText: 'Email',
                           ),
-                          const SizedBox(height: 80),
-                          SizedBox(
-                            height: 50,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary:
-                                    const Color.fromARGB(255, 107, 220, 111),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
+                          const SizedBox(height: 40),
+                          GetBuilder<Authcontroller>(
+                            builder: (_) {
+                              return SizedBox(
+                                height: 50,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: const Color.fromARGB(
+                                        255, 107, 220, 111),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    
+                                    if (formKey.currentState!.validate()) {
+                                      String email =
+                                          emailcontroller.text.trim();
+                                      controller.resetPassword(email);
+                                    }
+                                  },
+                                  child: const TextUltils(
+                                    text: 'Submit',
+                                    fontsize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
-                              ),
-                              onPressed: () {},
-                              child: const TextUltils(
-                                text: 'Submit',
-                                fontsize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          )
+                              );
+                            },
+                          ),
                         ],
                       ),
                     ],
