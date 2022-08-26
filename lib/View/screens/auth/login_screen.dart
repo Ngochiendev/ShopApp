@@ -6,7 +6,6 @@ import 'package:shopapp/View/widgets/auth/auth_text_form_field.dart';
 import 'package:shopapp/View/widgets/text_ultils.dart';
 import 'package:shopapp/logic/controller/auth_controller.dart';
 import 'package:shopapp/ultils/ultilService.dart';
-
 import 'component/auth_button.dart';
 import 'component/social_login.dart';
 
@@ -210,11 +209,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SocialCard(
-                                        icon:
-                                            './assets/icons/facebook_icon.svg',
-                                        onpress: () {
-                                          print('facebook');
+                                      GetBuilder<Authcontroller>(
+                                        builder: (_) {
+                                          return SocialCard(
+                                            icon:
+                                                './assets/icons/facebook_icon.svg',
+                                            onpress: () {
+                                              controller.facebookSignInApp();
+                                              print('facebook');
+                                            },
+                                          );
                                         },
                                       ),
                                       //login google
@@ -224,7 +228,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             icon:
                                                 './assets/icons/google_icon.svg',
                                             onpress: () {
-                                              controller.googleSignApp();
+                                              controller.googleSignInApp();
                                               print('google');
                                             },
                                           );
