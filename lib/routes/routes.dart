@@ -3,6 +3,7 @@ import 'package:shopapp/View/screens/auth/forgot_screen.dart';
 import 'package:shopapp/View/screens/auth/signin_signupScreen.dart';
 import 'package:shopapp/View/screens/main_screen.dart';
 import 'package:shopapp/logic/bindings/Auth_binding.dart';
+import 'package:shopapp/logic/bindings/Main_binding.dart';
 import '../View/screens/auth/login_screen.dart';
 import '../View/screens/auth/signup_screen.dart';
 import '../View/screens/auth/flash_screen.dart';
@@ -32,13 +33,16 @@ class AppPage {
     ),
     GetPage(
       name: PageRoutes.forgetScreen,
-      page: () => ForgotScreen(),
+      page: () => const ForgotScreen(),
       binding: AuthBinding(),
     ),
     GetPage(
       name: PageRoutes.mainScreen,
       page: () => const MainScreen(),
-      binding: AuthBinding(),
+      bindings: [
+        AuthBinding(),
+        MainBinding(),
+      ],
     ),
   ];
 }

@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -10,6 +9,7 @@ class TextUltils extends StatelessWidget {
   final FontWeight? fontWeight;
   final TextDecoration? decoration;
   final TextAlign? textAlign;
+  final double? letterSpacing;
 
   const TextUltils({
     Key? key,
@@ -20,6 +20,7 @@ class TextUltils extends StatelessWidget {
     this.fontWeight,
     this.decoration,
     this.textAlign,
+    this.letterSpacing,
   }) : super(key: key);
 
   @override
@@ -34,6 +35,7 @@ class TextUltils extends StatelessWidget {
           overflow: textOverflow,
           fontWeight: fontWeight,
           decoration: decoration,
+          letterSpacing: letterSpacing,
         ),
       ),
     );
