@@ -31,17 +31,14 @@ class _MainScreenState extends State<MainScreen> {
             centerTitle: true,
             leading: Container(),
             actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 4),
-                child: IconButton(
-                  onPressed: () {
-                    print('cart');
-                  },
-                  icon: SvgPicture.asset(
-                    './assets/icons/bag.svg',
-                    fit: BoxFit.fill,
-                    height: 30,
-                  ),
+              IconButton(
+                onPressed: () {
+                  print('cart');
+                },
+                icon: SvgPicture.asset(
+                  './assets/icons/bag.svg',
+                  fit: BoxFit.fill,
+                  height: 30,
                 ),
               ),
             ],
