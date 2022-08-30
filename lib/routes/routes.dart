@@ -4,6 +4,7 @@ import 'package:shopapp/View/screens/auth/signin_signupScreen.dart';
 import 'package:shopapp/View/screens/main_screen.dart';
 import 'package:shopapp/logic/bindings/Auth_binding.dart';
 import 'package:shopapp/logic/bindings/Main_binding.dart';
+import 'package:shopapp/logic/bindings/product_binding.dart';
 import '../View/screens/auth/login_screen.dart';
 import '../View/screens/auth/signup_screen.dart';
 import '../View/screens/auth/flash_screen.dart';
@@ -42,6 +43,7 @@ class AppPage {
       bindings: [
         AuthBinding(),
         MainBinding(),
+        ProductBindings(),
       ],
     ),
   ];

@@ -39,6 +39,7 @@ dependencies:
   flutter_facebook_auth: ^4.2.1
   firebase_auth: ^3.6.4
   firebase_core: ^1.21.0
+  firebase_storage: ^10.3.7
   get: ^4.6.5
   get_storage: ^2.0.3
   google_fonts: ^3.0.1

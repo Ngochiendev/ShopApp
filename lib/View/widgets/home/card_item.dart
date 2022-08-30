@@ -1,29 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shopapp/View/widgets/text_ultils.dart';
+import 'package:shopapp/logic/controller/product_controller.dart';
 
 class CardItems extends StatelessWidget {
   const CardItems({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: GridView.builder(
-        itemCount: 10,
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          childAspectRatio: 0.8,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          maxCrossAxisExtent: 200,
-        ),
-        itemBuilder: (context, index) {
-          return buidCartItem();
-        },
-      ),
+    final controller = Get.find<ProductController>();
+
+    return Obx(
+      () {
+        if (controller.isLoading.value) {
+          return const Center(
+            child: SizedBox(
+              height: 30.0,
+              width: 30.0,
+              child: CircularProgressIndicator(
+                color: Colors.green,
+              ),
+            ),
+          );
+        } else {
+          return Expanded(
+            child: GridView.builder(
+              itemCount: controller.productsList.length,
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                childAspectRatio: 0.8,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                maxCrossAxisExtent: 200,
+              ),
+              itemBuilder: (context, index) {
+                return buidCartItem(
+                  image: controller.productsList[index].image,
+                  price: controller.productsList[index].price,
+                  rate: controller.productsList[index].rating.rate,
+                );
+              },
+            ),
+          );
+        }
+      },
     );
   }
 }
 
-Widget buidCartItem() {
+Widget buidCartItem({
+  required String image,
+  required double? rate,
+  required double? price,
+}) {
   return Padding(
     padding: const EdgeInsets.all(5),
     child: Container(
@@ -71,8 +99,8 @@ Widget buidCartItem() {
               borderRadius: BorderRadius.circular(15),
             ),
             child: Image.network(
-              'https://bigdata-vn.com/wp-content/uploads/2021/10/Top-16-cach-giup-ban-chup-that-sac-net-ro.jpg',
-              fit: BoxFit.cover,
+              image,
+              fit: BoxFit.fitHeight,
             ),
           ),
           Padding(
@@ -80,7 +108,7 @@ Widget buidCartItem() {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('\$15'),
+                Text('\$ $price'),
                 Container(
                   height: 18,
                   width: 45,
@@ -89,13 +117,13 @@ Widget buidCartItem() {
                       color: const Color.fromARGB(255, 120, 214, 123)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
+                    children: [
                       TextUltils(
-                        text: '4.5',
+                        text: '$rate',
                         fontsize: 13,
                         color: Colors.white,
                       ),
-                      Icon(
+                      const Icon(
                         Icons.star,
                         color: Colors.white,
                         size: 13,
