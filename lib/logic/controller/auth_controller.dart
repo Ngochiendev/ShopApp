@@ -14,6 +14,7 @@ class Authcontroller extends GetxController {
   var displayUserName = '';
   var displayUserPhoto = '';
   FirebaseAuth auth = FirebaseAuth.instance;
+
   var googleSignIn = GoogleSignIn();
   FacebookModels? facebookmodel;
   var isSignIn = false;
