@@ -3,6 +3,7 @@
     package="com.example.shopapp">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    
 
 
    <application

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shopapp/View/widgets/home/search_text_form.dart';
 import 'package:shopapp/View/widgets/text_ultils.dart';
-import 'package:shopapp/logic/controller/product_controller.dart';
 
 import '../widgets/home/card_item.dart';
 
@@ -66,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const SizedBox(height: 30),
-          const CardItems(),
+          CardItems(),
         ],
       ),
     );
