@@ -7,12 +7,14 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shopapp/Models/facebook_models.dart';
 import 'package:shopapp/routes/routes.dart';
+import 'package:shopapp/services/database_services.dart';
 
 class Authcontroller extends GetxController {
   bool isVisibilty = false;
   bool isCheckbox = false;
   var displayUserName = '';
   var displayUserPhoto = '';
+  var displayEmail = '';
   FirebaseAuth auth = FirebaseAuth.instance;
 
   var googleSignIn = GoogleSignIn();
@@ -36,12 +38,18 @@ class Authcontroller extends GetxController {
       required String email,
       required String password}) async {
     try {
-      await auth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) => {
-                displayUserName = name,
-                auth.currentUser!.updateDisplayName(name)
-              });
+      // await auth
+      //     .createUserWithEmailAndPassword(email: email, password: password)
+      //     .then((value) => {
+      //           displayUserName = name,
+      //           auth.currentUser!.updateDisplayName(name)
+      //         });
+      User user = (await auth.createUserWithEmailAndPassword(
+              email: email, password: password))
+          .user!;
+
+      //update profile with Cloud FireStore
+      await DatabaseServices(uid: user.uid).updateUserData(name, email, '');
       update();
       Get.snackbar(
         '',
@@ -132,6 +140,7 @@ class Authcontroller extends GetxController {
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       displayUserName = googleUser!.displayName!;
       displayUserPhoto = googleUser.photoUrl!;
+      displayEmail = googleUser.email;
       // Obtain the auth details from the request
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
@@ -144,9 +153,15 @@ class Authcontroller extends GetxController {
       await FirebaseAuth.instance.signInWithCredential(credential);
       isSignIn = true;
       authbox.write('auth', isSignIn);
+
+      //update profile with Cloud FireStore
+      await DatabaseServices(uid: googleUser.id)
+          .updateUserData(displayUserName, displayEmail, displayUserPhoto);
+
       update();
       Get.offNamed('/mainScreen');
-    } catch (error) {
+    } on FirebaseAuthException catch (error) {
+      print(error.message);
       Get.snackbar(
         'Error!',
         error.toString(),

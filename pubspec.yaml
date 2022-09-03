@@ -40,6 +40,7 @@ dependencies:
   firebase_auth: ^3.6.4
   firebase_core: ^1.21.0
   firebase_storage: ^10.3.7
+  cloud_firestore: ^3.4.6
   get: ^4.6.5
   get_storage: ^2.0.3
   google_fonts: ^3.0.1
@@ -50,6 +51,7 @@ dependencies:
   flutter_svg: ^1.1.4
   url_launcher: ^6.1.5
   google_nav_bar: ^5.0.6
+  badges: ^2.0.3
   
 
 dev_dependencies:

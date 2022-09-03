@@ -1,9 +1,12 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shopapp/View/widgets/text_ultils.dart';
+import 'package:shopapp/logic/controller/cart_controller.dart';
 import 'package:shopapp/logic/controller/main_controller.dart';
+import 'package:shopapp/logic/controller/product_controller.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -14,6 +17,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final controller = Get.find<MainController>();
+  final quantitycontroller = Get.find<CartController>();
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -31,14 +35,24 @@ class _MainScreenState extends State<MainScreen> {
             centerTitle: true,
             leading: Container(),
             actions: [
-              IconButton(
-                onPressed: () {
-                  print('cart');
-                },
-                icon: SvgPicture.asset(
-                  './assets/icons/bag.svg',
-                  fit: BoxFit.fill,
-                  height: 30,
+              Badge(
+                position: BadgePosition.topEnd(top: 0, end: 0),
+                animationDuration: const Duration(milliseconds: 300),
+                animationType: BadgeAnimationType.slide,
+                badgeContent: Text(
+                  quantitycontroller.quantity().toString(),
+                  style: const TextStyle(color: Colors.white, fontSize: 10),
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    Get.toNamed('cartScreen');
+                    print('cart');
+                  },
+                  icon: SvgPicture.asset(
+                    './assets/icons/bag.svg',
+                    fit: BoxFit.fill,
+                    height: 30,
+                  ),
                 ),
               ),
             ],
