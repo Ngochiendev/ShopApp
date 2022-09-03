@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shopapp/Models/product_models.dart';
 import 'package:shopapp/View/widgets/text_ultils.dart';
+import 'package:shopapp/logic/controller/cart_controller.dart';
 import 'package:shopapp/logic/controller/product_controller.dart';
 
 class CardItems extends StatelessWidget {
   CardItems({Key? key}) : super(key: key);
   final controller = Get.find<ProductController>();
+  final cartController = Get.find<CartController>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +43,7 @@ class CardItems extends StatelessWidget {
                     price: controller.productsList[index].price,
                     rate: controller.productsList[index].rating.rate,
                     productId: controller.productsList[index].id,
+                    productModels: controller.productsList[index],
                   );
                 },
               ),
@@ -55,6 +59,7 @@ class CardItems extends StatelessWidget {
     required double? rate,
     required double? price,
     required int productId,
+    required ProductModels productModels,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -95,10 +100,11 @@ class CardItems extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () {
-                        print('add');
+                        cartController.addProductToCart(productModels);
+                        print('add to cart');
                       },
                       icon: const Icon(
-                        Icons.add,
+                        Icons.shopping_cart,
                         color: Colors.black,
                       ),
                     ),
