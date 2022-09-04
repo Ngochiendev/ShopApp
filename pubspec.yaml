@@ -45,13 +45,14 @@ dependencies:
   get_storage: ^2.0.3
   google_fonts: ^3.0.1
   http: ^0.13.5
-  # carousel_slider: ^4.1.1
   lottie: ^1.4.1
   # font_awesome_flutter: ^10.1.0
   flutter_svg: ^1.1.4
   url_launcher: ^6.1.5
   google_nav_bar: ^5.0.6
   badges: ^2.0.3
+  smooth_page_indicator: ^1.0.0+2
+  carousel_slider: ^4.1.1
   
 
 dev_dependencies:
