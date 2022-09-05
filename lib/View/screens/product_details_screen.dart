@@ -31,7 +31,7 @@ class ProductDetailsScreen extends StatelessWidget {
       bottomNavigationBar: SizedBox(
         height: 100,
         child: AddCart(
-          price: productModels.price,
+          price: productModels.price, 
           productModels: productModels,
         ),
       ),
