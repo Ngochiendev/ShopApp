@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "942341223041",
+    "firebase_url": "https://shopapp-getx-00-default-rtdb.firebaseio.com",
     "project_id": "shopapp-getx-00",
     "storage_bucket": "shopapp-getx-00.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "942341223041-qunesvua9d07j4ehhevkjnpfl7128vuu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shopapp",
+            "certificate_hash": "944c95a16979377379d1b8dcb6f9d0b5d2ad969a"
+          }
+        },
         {
           "client_id": "942341223041-3m3e7h93oki0ha7hto6ejdeavb1i7143.apps.googleusercontent.com",
           "client_type": 3
