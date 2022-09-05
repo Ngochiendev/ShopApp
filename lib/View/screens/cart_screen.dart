@@ -60,7 +60,7 @@ class _CartScreenState extends State<CartScreen> {
                             );
                           },
                           separatorBuilder: (context, index) =>
-                              const SizedBox(height: 20),
+                              const SizedBox(height: 2),
                           itemCount: controller.productsMap.length,
                         ),
                       ),
