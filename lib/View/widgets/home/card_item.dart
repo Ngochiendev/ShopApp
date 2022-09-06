@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:shopapp/Models/product_models.dart';
 import 'package:shopapp/View/screens/product_details_screen.dart';
@@ -27,33 +28,55 @@ class CardItems extends StatelessWidget {
           );
         } else {
           return Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 3),
-              child: GridView.builder(
-                itemCount: controller.productsList.length,
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  childAspectRatio: 0.8,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  maxCrossAxisExtent: 200,
-                  mainAxisExtent: 215,
-                ),
-                itemBuilder: (context, index) {
-                  return buidCartItem(
-                    image: controller.productsList[index].image,
-                    price: controller.productsList[index].price,
-                    rate: controller.productsList[index].rating.rate,
-                    productId: controller.productsList[index].id,
-                    productModels: controller.productsList[index],
-                    onTap: () {
-                      Get.to(() => ProductDetailsScreen(
-                          productModels: controller.productsList[index]));
-                      print('Product Details Screen');
-                    },
-                  );
-                },
-              ),
-            ),
+            child: controller.searchList.isEmpty &&
+                    controller.searchcontroller.text.isNotEmpty
+                ? SvgPicture.asset('./assets/icons/empty_search.svg')
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 3),
+                    child: GridView.builder(
+                      itemCount: controller.searchList.isEmpty
+                          ? controller.productsList.length
+                          : controller.searchList.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        childAspectRatio: 0.8,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                        maxCrossAxisExtent: 200,
+                        mainAxisExtent: 215,
+                      ),
+                      itemBuilder: (context, index) {
+                        if (controller.searchList.isEmpty) {
+                          return buidCartItem(
+                            image: controller.productsList[index].image,
+                            price: controller.productsList[index].price,
+                            rate: controller.productsList[index].rating.rate,
+                            productId: controller.productsList[index].id,
+                            productModels: controller.productsList[index],
+                            onTap: () {
+                              Get.to(() => ProductDetailsScreen(
+                                  productModels:
+                                      controller.productsList[index]));
+                              print('Product Details Screen');
+                            },
+                          );
+                        } else {
+                          return buidCartItem(
+                            image: controller.searchList[index].image,
+                            price: controller.searchList[index].price,
+                            rate: controller.searchList[index].rating.rate,
+                            productId: controller.searchList[index].id,
+                            productModels: controller.searchList[index],
+                            onTap: () {
+                              Get.to(() => ProductDetailsScreen(
+                                  productModels: controller.searchList[index]));
+                              print('Product Details Screen');
+                            },
+                          );
+                        }
+                      },
+                    ),
+                  ),
           );
         }
       },
