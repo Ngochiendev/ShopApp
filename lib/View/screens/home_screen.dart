@@ -32,22 +32,22 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  TextUltils(
+                children: [
+                  const TextUltils(
                     text: 'Find Your',
                     color: Colors.white,
                     fontsize: 25,
                     fontWeight: FontWeight.w300,
                     letterSpacing: 0.8,
                   ),
-                  TextUltils(
+                  const TextUltils(
                     text: 'INSPIRATION',
                     color: Colors.white,
                     fontsize: 28,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 0.8,
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   SearchFormText(),
                 ],
               ),
