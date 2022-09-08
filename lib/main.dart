@@ -3,7 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:shopapp/logic/language/localization.dart';
 import 'package:shopapp/routes/routes.dart';
+import 'package:shopapp/ultils/ultilService.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +21,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Shop App',
+      locale: Locale(GetStorage().read<String>("lang").toString()),
+      translations: LocalizationApp(),
+      fallbackLocale: Locale(ene),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
