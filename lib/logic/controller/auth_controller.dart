@@ -12,15 +12,27 @@ import 'package:shopapp/services/database_services.dart';
 class Authcontroller extends GetxController {
   bool isVisibilty = false;
   bool isCheckbox = false;
-  var displayUserName = '';
-  var displayUserPhoto = '';
-  var displayEmail = '';
+  var displayUserName = ''.obs;
+  var displayUserPhoto = ''.obs;
+  var displayEmail = ''.obs;
   FirebaseAuth auth = FirebaseAuth.instance;
-
   var googleSignIn = GoogleSignIn();
   FacebookModels? facebookmodel;
   var isSignIn = false;
   final GetStorage authbox = GetStorage();
+
+  User? get userProfile => auth.currentUser;
+
+  @override
+  onInit() {
+    displayUserName.value =
+        (userProfile != null ? userProfile!.displayName : "")!;
+    displayUserPhoto.value =
+        (userProfile != null ? userProfile!.photoURL : "")!;
+    displayEmail.value = (userProfile != null ? userProfile!.email : "")!;
+
+    super.onInit();
+  }
 
   Future<void> Visibilty() async {
     isVisibilty = !isVisibilty;
@@ -41,7 +53,7 @@ class Authcontroller extends GetxController {
       // await auth
       //     .createUserWithEmailAndPassword(email: email, password: password)
       //     .then((value) => {
-      //           displayUserName = name,
+      //           displayUserName.value = name,
       //           auth.currentUser!.updateDisplayName(name)
       //         });
       User user = (await auth.createUserWithEmailAndPassword(
@@ -100,7 +112,8 @@ class Authcontroller extends GetxController {
     try {
       await auth
           .signInWithEmailAndPassword(email: email, password: password)
-          .then((value) => displayUserName = auth.currentUser!.displayName!);
+          .then((value) =>
+              displayUserName.value = auth.currentUser!.displayName!);
       isSignIn = true;
       authbox.write('auth', isSignIn);
       update();
@@ -138,9 +151,9 @@ class Authcontroller extends GetxController {
   Future<void> googleSignInApp() async {
     try {
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-      displayUserName = googleUser!.displayName!;
-      displayUserPhoto = googleUser.photoUrl!;
-      displayEmail = googleUser.email;
+      displayUserName.value = googleUser!.displayName!;
+      displayUserPhoto.value = googleUser.photoUrl!;
+      displayEmail.value = googleUser.email;
       // Obtain the auth details from the request
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
@@ -155,8 +168,8 @@ class Authcontroller extends GetxController {
       authbox.write('auth', isSignIn);
 
       //update profile with Cloud FireStore
-      await DatabaseServices(uid: googleUser.id)
-          .updateUserData(displayUserName, displayEmail, displayUserPhoto);
+      await DatabaseServices(uid: googleUser.id).updateUserData(
+          displayUserName.value, displayEmail.value, displayUserPhoto.value);
 
       update();
       Get.offNamed('/mainScreen');
@@ -269,8 +282,9 @@ class Authcontroller extends GetxController {
       await auth.signOut();
       await googleSignIn.signOut();
       await FacebookAuth.i.logOut();
-      displayUserName = '';
-      displayUserPhoto = '';
+      displayUserName.value = '';
+      displayUserPhoto.value = '';
+      displayEmail.value = '';
       isSignIn = false;
       authbox.remove('auth');
       update();
