@@ -1,16 +1,20 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:shopapp/View/widgets/text_ultils.dart';
 import 'package:shopapp/logic/controller/setting_controller.dart';
 import 'package:shopapp/ultils/theme.dart';
-import 'package:shopapp/ultils/ultilService.dart';
 
-class SetLanguageWidget extends StatelessWidget {
-  SetLanguageWidget({
+class SetLanguageWidget extends StatefulWidget {
+  const SetLanguageWidget({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<SetLanguageWidget> createState() => _SetLanguageWidgetState();
+}
+
+class _SetLanguageWidgetState extends State<SetLanguageWidget> {
   final controller = Get.find<SettingController>();
 
   @override
@@ -52,33 +56,27 @@ class SetLanguageWidget extends StatelessWidget {
               ),
             ),
             child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                  items: [
-                    DropdownMenuItem(
-                      value: ene,
-                      child: Text(
-                        english,
-                        style:
-                            const TextStyle(fontSize: 14, color: Colors.black),
-                      ),
+              child: DropdownButton<String?>(
+                value: controller.currentTranslation.value,
+                onChanged: (value) {
+                  controller.setTranslation(value: value!);
+                  Get.updateLocale(Locale(value));
+                },
+                // selectedItemBuilder: (context) => List.from(
+                //   translations.map((e) => Text(e['title']!)),
+                // ),
+                items: List.from(
+                  translations.map(
+                    (e) => DropdownMenuItem<String?>(
+                      onTap: () {
+                        controller.setTranslation(value: e['value']!);
+                      },
+                      value: e['value'],
+                      child: Text(e['title']!),
                     ),
-                    DropdownMenuItem(
-                      value: frr,
-                      child: Text(
-                        france,
-                        style:
-                            const TextStyle(fontSize: 14, color: Colors.black),
-                      ),
-                    ),
-                  ],
-                  icon: const Icon(
-                    Icons.arrow_drop_down,
                   ),
-                  value: ene,
-                  onChanged: (value) {
-                    controller.changeLanguage(value!);
-                    Get.updateLocale(Locale(value));
-                  }),
+                ),
+              ),
             ),
           ),
         ],
