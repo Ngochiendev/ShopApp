@@ -3,6 +3,7 @@ import 'package:shopapp/View/screens/auth/forgot_screen.dart';
 import 'package:shopapp/View/screens/auth/signin_signupScreen.dart';
 import 'package:shopapp/View/screens/cart_screen.dart';
 import 'package:shopapp/View/screens/main_screen.dart';
+import 'package:shopapp/View/screens/payment_screen.dart';
 import 'package:shopapp/logic/bindings/Auth_binding.dart';
 import 'package:shopapp/logic/bindings/Main_binding.dart';
 import 'package:shopapp/logic/bindings/product_binding.dart';
@@ -55,6 +56,15 @@ class AppPage {
         ProductBindings(),
       ],
     ),
+    GetPage(
+      name: PageRoutes.paymentScreen,
+      page: () => const PaymentScreen(),
+      bindings: [
+        AuthBinding(),
+        ProductBindings(),
+        MainBinding(),
+      ],
+    ),
   ];
 }
 
@@ -67,4 +77,5 @@ class PageRoutes {
   static String forgetScreen = '/forgotScreen';
   static String mainScreen = '/mainScreen';
   static String cartScreen = '/cartScreen';
+  static String paymentScreen = '/paymentScreen';
 }

@@ -41,12 +41,13 @@ class CartTotal extends StatelessWidget {
                 height: 55,
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: const Color.fromARGB(255, 107, 220, 111),
+                      backgroundColor: const Color.fromARGB(255, 107, 220, 111),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
                     ),
                     onPressed: () {
+                      Get.toNamed('paymentScreen');
                       print('check out');
                     },
                     child: Row(
