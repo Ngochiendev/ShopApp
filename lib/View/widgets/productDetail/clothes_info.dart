@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:readmore/readmore.dart';
-
 import 'package:shopapp/View/widgets/text_ultils.dart';
 import 'package:shopapp/logic/controller/product_controller.dart';
 
